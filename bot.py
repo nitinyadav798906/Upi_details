@@ -1,7 +1,7 @@
-import logging
-from telegram import Update
 from telegram.ext import Updater, CommandHandler, MessageHandler, Filters, CallbackContext
-import requests
+from telegram import Update
+from telegram.ext import ApplicationBuilder, CommandHandler, MessageHandler, filters, ContextTypes
+
 
 # Replace 'YOUR_API_KEY' with your NumVerify API key
 NUMVERIFY_API_KEY = 'YOUR_API_KEY'
