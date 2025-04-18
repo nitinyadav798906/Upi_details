@@ -1,23 +1,35 @@
-from flask import Flask, request, jsonify
+import os
+import telebot
+from telebot import types
 
-app = Flask(__name__)
+# Initialize the bot with your token
+API_TOKEN = os.getenv('7854424887:AAF1Mhu6tPz6rkso5eW1IHKGq8cYx9QCBhY')  # Alternatively, replace it with your token directly
+bot = telebot.TeleBot(API_TOKEN)
 
-@app.route('/extract_upi', methods=['POST'])
-def extract_upi():
-    details = request.json  # Get JSON data from POST request
-    if not details:
-        return jsonify({"error": "No data provided"}), 400
-    
-    required_fields = [
-        "Name", "UPI Id", "Full Details", "MICR", "Branch", "Address",
-        "State", "Contact", "UPI", "RTGS", "City", "Centre", "District",
-        "NEFT", "IMPS", "SWIFT", "ISO3166", "Bank", "BankCode", "IFSC",
-        "PhonePe Number"
-    ]
-    
-    response = {field: details.get(field, "Not provided") for field in required_fields}
-    
-    return jsonify(response), 200
+# UPI details dictionary
+upi_details = {}
+
+# Start command
+@bot.message_handler(commands=['start'])
+def send_welcome(message):
+    bot.reply_to(message, "Welcome! Please send your UPI details in the following format:\n"
+                          "Name: \nUPI Id: \nFull Details: \nMICR: ...")
+
+# Message handler for collecting UPI details
+@bot.message_handler(func=lambda message: True)
+def collect_upi_details(message):
+    details = message.text.split('\n')
+    for detail in details:
+        try:
+            key, value = detail.split(':', 1)
+            key = key.strip()
+            value = value.strip()
+            upi_details[key] = value
+        except ValueError:
+            continue
+
+    bot.reply_to(message, "Thank you! Here are the details you provided:\n" + 
+                          "\n".join(f"{key}: {value}" for key, value in upi_details.items()))
 
 if __name__ == '__main__':
-    app.run(port=5000)
+    bot.polling()
