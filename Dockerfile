@@ -5,8 +5,8 @@ FROM python:3.9-slim
 WORKDIR /app
 
 # Copy requirements and install them
-COPY req.txt .
-RUN pip install --no-cache-dir -r req.txt
+COPY requirements.txt .
+RUN pip install --no-cache-dir -r requirements.txt
 
 # Copy the bot script
 COPY bot.py .
