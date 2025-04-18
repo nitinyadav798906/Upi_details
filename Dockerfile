@@ -11,8 +11,9 @@ RUN pip install --no-cache-dir -r requirements.txt
 # Copy the bot script
 COPY bot.py .
 
-# Environment variable for the bot token
-ENV TELEGRAM_BOT_TOKEN=7854424887:AAF1Mhu6tPz6rkso5eW1IHKGq8cYx9QCBhY
+# Set your bot token directly (optional)
+# ENV TELEGRAM_BOT_TOKEN=7854424887:AAF1Mhu6tPz6rkso5eW1IHKGq8cYx9QCBhY
 
 # Run the bot
 CMD ["python", "bot.py"]
+
