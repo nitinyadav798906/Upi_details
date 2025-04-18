@@ -1,20 +1,15 @@
-# Use the official Python image
+# Use an official Python runtime as a parent image
 FROM python:3.9-slim
 
-# Set the working directory
+# Set the working directory in the container
 WORKDIR /app
 
-# Copy requirements and install them
-COPY requirements.txt .
+# Copy the current directory contents into the container at /app
+COPY . /app
+
+# Install any needed packages specified in requirements.txt
 RUN pip install --no-cache-dir -r requirements.txt
-RUN pip install pyTelegramBotAPI
 
-# Copy the bot script
-COPY bot.py .
-
-# Set your bot token directly (optional)
-# ENV TELEGRAM_BOT_TOKEN=7854424887:AAF1Mhu6tPz6rkso5eW1IHKGq8cYx9QCBhY
-
-# Run the bot
-CMD ["python", "bot.py"]
+# Make the bot executable
+ENTRYPOINT ["python", "bot.py"]
 
