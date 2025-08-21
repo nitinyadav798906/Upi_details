@@ -38,7 +38,7 @@ def handle_message(update: Update, _: CallbackContext) -> None:
         update.message.reply_text('Please send a valid mobile number.')
 
 def main() -> None:
-    updater = Updater("7854424887:AAF1Mhu6tPz6rkso5eW1IHKGq8cYx9QCBhY")
+    updater = Updater("7706778428:AAHJr2szdgXTCBk8LokLA5jgxxdTAM_o2wM")
 
     dispatcher = updater.dispatcher
     dispatcher.add_handler(CommandHandler("start", start))
